@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Info Display App</title>
+
+    <link rel="stylesheet" href="/assets/style.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+<div id="flex_div">
+     <canvas id="canvas" width="500" height="500" >cccc</canvas> 
+<div class="container">
+	 <div class="app-title">
+            <p class="textp">Weather</p>
+        </div>
+        <div class="notification"> </div>
+        <div class="weather-container">
+            <div class="weather-icon">
+                <img src="/assets/icons/unknown.png" alt="">
+            </div>
+            <div class="temperature-value">
+                <p>- °<span>C</span></p>
+            </div>
+            <div class="temperature-description">
+                <p> - </p>
+            </div>
+            <div class="location">
+                <p>-</p>
+            </div>
+        </div>
+    </div>
+<div class="newsDiv">
+    <iframe width="540" height="450" src="https://www.youtube.com/embed/NMre6IAAAiU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+ 
+    <div class="buttons-row">
+
+    <div class="button-play"><img src="/assets/icons/icons8-rewind-64.png" width="45px" height="45px"class="playbtns" ></div>
+    <div class="button-play"><img src="/assets/icons/icons8-pause-64.png" id="button-yellow" width="45px" height="45px" class="playbtns" ></div>
+    <div class="button-play"><img src="/assets/icons/icons8-stop-64.png" id="button-red" width="45px" height="45px"class="playbtns" ></div>
+    <div class="button-play"><img src="/assets/icons/icons8-play-64.png" id="button-green" width="45px" height="45px" class="playbtns"></div>
+    <div class="button-play"><img src="/assets/icons/icons8-fast-forward-64.png" width="45px" height="45px" class="playbtns"></div>
+
+    </div>
+    
+  </div>
+
+      <div class="buttons-container">
+      <div class="buttons-container__button buttons-container__button--red" id="button-red">ALERT!</div>
+      <div class="buttons-container__button buttons-container__button--yellow" id="button-yellow">TIMER ON!</div>
+      <div class="buttons-container__button buttons-container__button--green" id="button-green">REMIND ME!</div>
+    </div>
+    <div id="outputDiv">
+<h1 class="heading1"> STATUS </h1>
+ <label class="switch">
+    <input type="checkbox">
+    <span class="slider round"></span>
+  </label><script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script> 
+<script>
+let socket = io(); //load socket.io-client and connect to the host that serves the page
+window.addEventListener("load", function(){ //when page loads
+  let lightbox = document.getElementById("light");
+  lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
+    socket.emit("light", Number(this.checked)); //send button status to server (as 1 or 0)
+  });
+});
+socket.on('light', function (data) { //get button status from client
+  document.getElementById("light").checked = data; //change checkbox according to push button on Raspberry Pi
+  socket.emit("light", data); //send push button status to back to server
+});
+</script>
+ </div>
+    <img src="/assets/todaysnews.png" alt="Today" id="headerImage">
+  </div>
+    <script src="/assets/index.js"></script>
+    <script src="/assets/socket.io.js"></script>
+    <script src="/assets/main.js"></script>
+    <script src="/assets/app.js"></script>
+    <script src="/assets/video.js"></script>
+  </body>
+</html>
